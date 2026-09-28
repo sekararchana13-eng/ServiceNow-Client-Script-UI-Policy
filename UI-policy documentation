@@ -1,0 +1,306 @@
+# UI Policy Documentation
+
+## Project Title
+
+**Implement Client Script & UI Policy on ServiceNow Incident**
+
+---
+
+## 1. Introduction
+
+A UI Policy in ServiceNow is used to dynamically control the behavior of form fields based on specified conditions. It can make fields mandatory, read-only, or visible without requiring the user to manually change the field properties.
+
+In this project, a UI Policy is implemented on the **Incident** table to improve data entry and maintain consistent information while creating or updating Incident records.
+
+The UI Policy works together with Client Scripts to provide dynamic form behavior and validation.
+
+---
+
+## 2. Objective
+
+The main objectives of implementing the UI Policy are:
+
+- To control Incident form fields dynamically.
+- To make required fields mandatory when necessary.
+- To make selected fields read-only based on conditions.
+- To control the visibility of fields.
+- To reduce incorrect or incomplete data entry.
+- To improve consistency in Incident records.
+- To provide a better user experience while working with Incident forms.
+
+---
+
+## 3. ServiceNow Table Used
+
+The UI Policy is configured for the:
+
+**Table:** Incident  
+**Application:** ServiceNow Incident Management
+
+The Incident table contains information related to reported issues, their priority, impact, state, category, assignment, and resolution.
+
+---
+
+## 4. UI Policy Components
+
+A UI Policy mainly consists of the following components:
+
+### 4.1 Table
+
+The table determines where the UI Policy is applied.
+
+For this project:
+
+```text
+4.2 Conditions
+
+Conditions determine when the UI Policy should become active.
+
+The condition can be based on Incident fields such as:
+
+State
+Category
+Priority
+Impact
+Other applicable Incident fields
+
+When the specified condition becomes true, the UI Policy Actions are executed.
+
+4.3 UI Policy Actions
+
+UI Policy Actions determine what happens to the selected fields when the condition is satisfied.
+
+The available actions include:
+
+Mandatory
+Read-only
+Visible
+5. UI Policy Configuration
+
+The UI Policy is created from the ServiceNow Incident module.
+
+General Configuration
+
+The following basic configuration is used:
+
+Property	Description
+Table	Incident
+Active	Enabled
+Condition	Defined based on the project requirement
+UI Type	Applicable Incident form UI
+Reverse if false	Used when the field behavior must return to its original state when the condition becomes false
+
+The exact condition and affected fields should match the configuration implemented and tested in the ServiceNow instance.
+
+6. UI Policy Actions
+
+After creating the UI Policy, UI Policy Actions are configured for the required Incident fields.
+
+Mandatory
+
+When a field is marked as Mandatory, the user must provide a value before the form can be successfully submitted.
+
+Example:
+
+Mandatory = True
+
+This helps prevent incomplete Incident records.
+
+Read-only
+
+When a field is marked as Read-only, the user cannot manually modify its value while the UI Policy condition is active.
+
+Example:
+
+Read-only = True
+
+This helps protect important information from unwanted changes.
+
+Visible
+
+The Visible property controls whether a field is displayed on the Incident form.
+
+Example:
+
+Visible = True
+
+A field can be shown or hidden depending on the configured UI Policy behavior.
+
+7. Dynamic Behavior
+
+The UI Policy provides dynamic behavior on the Incident form.
+
+The general workflow is:
+
+User opens Incident form
+        ↓
+Incident field values are checked
+        ↓
+UI Policy condition is evaluated
+        ↓
+Condition satisfied?
+      /     \
+    Yes      No
+     ↓        ↓
+UI Policy   Normal/
+Actions     reversed
+applied     behavior
+
+When the condition becomes true, the configured UI Policy Actions are applied.
+
+When the condition becomes false, the field behavior can be restored using the Reverse if false option where required.
+
+8. Interaction with Client Scripts
+
+The UI Policy is used together with Client Scripts in this project.
+
+Client Scripts handle dynamic client-side behavior such as:
+
+Form loading
+Field changes
+Form submission validation
+List editing restrictions
+
+The UI Policy focuses mainly on controlling field properties such as:
+
+Mandatory
+Read-only
+Visible
+
+This combination provides better control over the Incident form.
+
+9. Testing the UI Policy
+
+The UI Policy should be tested using different Incident form scenarios.
+
+Test Case 1: Form Load
+
+Action:
+
+Open or create an Incident record.
+Observe the configured fields.
+
+Expected Result:
+
+The Incident form loads successfully.
+UI Policy behavior is applied according to the configured condition.
+Test Case 2: Condition Becomes True
+
+Action:
+
+Change the Incident field values so that the UI Policy condition is satisfied.
+
+Expected Result:
+
+The configured UI Policy Actions are applied.
+Required fields become mandatory where configured.
+Configured fields become read-only where applicable.
+Visibility changes are applied where configured.
+Test Case 3: Condition Becomes False
+
+Action:
+
+Change the Incident values so that the UI Policy condition is no longer satisfied.
+
+Expected Result:
+
+The UI Policy is no longer active.
+Fields return to their normal behavior when Reverse if false is configured.
+Test Case 4: Mandatory Field Validation
+
+Action:
+
+Leave a field configured as mandatory without a value.
+Attempt to submit the Incident.
+
+Expected Result:
+
+The system prevents submission until the required information is provided.
+Test Case 5: Read-only Field
+
+Action:
+
+Activate the UI Policy condition.
+Attempt to modify a field configured as read-only.
+
+Expected Result:
+
+The field cannot be manually modified while the UI Policy condition is active.
+10. Expected Results
+
+After successful implementation, the UI Policy should:
+
+Apply the configured field behavior dynamically.
+Enforce mandatory fields when required.
+Restrict editing of configured read-only fields.
+Control field visibility where required.
+Reverse field behavior when the condition becomes false, if configured.
+Work correctly with the Incident form.
+Support consistent and accurate Incident data entry.
+11. Benefits
+
+The implementation provides the following benefits:
+
+Improved Data Accuracy
+Required information is collected before submitting an Incident.
+Consistent Data Entry
+Users follow the configured form rules.
+Reduced User Errors
+Incorrect or incomplete data entry can be minimized.
+Dynamic Form Control
+Field behavior changes according to Incident conditions.
+Better User Experience
+Users see and interact with fields according to the current Incident situation.
+Improved Process Control
+Important fields can be protected from unwanted modification.
+12. Limitations
+
+The UI Policy mainly controls the behavior of fields on the client side.
+
+It should be combined with appropriate Client Scripts and server-side validation when stronger data validation or business rules are required.
+
+The actual behavior also depends on the conditions, fields, and UI Policy Actions configured in the ServiceNow instance.
+
+13. Conclusion
+
+The UI Policy implementation provides dynamic control over the ServiceNow Incident form. By using conditions and UI Policy Actions, fields can be made mandatory, read-only, or visible according to the required Incident situation.
+
+The implementation works together with Client Scripts to improve form behavior, reduce data-entry errors, and maintain consistent Incident records.
+
+The UI Policy was tested with different Incident scenarios to verify that the configured field behavior is applied correctly when the conditions are satisfied and restored when the conditions are no longer satisfied.
+
+14. Project Verification Checklist
+Test Item	Status
+UI Policy created on Incident table	Completed
+UI Policy condition configured	Completed
+UI Policy Actions configured	Completed
+Mandatory behavior tested	Completed
+Read-only behavior tested	Completed
+Visibility behavior tested	Completed
+Reverse condition tested	Completed
+Incident form tested	Completed
+Client Script interaction checked	Completed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
